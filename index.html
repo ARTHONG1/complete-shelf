@@ -39,9 +39,11 @@
     html,
     body {
       width: 100%;
-      min-height: 100%;
+      height: auto;
+      min-height: 100vh;
       margin: 0;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       background: var(--paper);
       color: var(--ink);
     }
@@ -67,12 +69,114 @@
     }
 
     .experience {
-      position: fixed;
-      inset: 0;
-      isolation: isolate;
+      position: relative;
+      width: 100%;
+      height: 100vh;
       overflow: hidden;
       background: var(--paper);
       transition: background-color 720ms var(--ease-out), color 520ms var(--ease-out);
+    }
+
+    /* --- HERO SCROLL SECTION (ClassDdok + Kakao Video Style) --- */
+    .hero-scroll-container {
+      position: relative;
+      width: 100%;
+      height: 350vh;
+      background: #080c16;
+      color: #ffffff;
+    }
+
+    .hero-sticky-view {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.82;
+      z-index: 1;
+      -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+    }
+
+    .hero-particle-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .hero-text-wrapper {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .hero-step-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%) scale(0.95);
+      width: 90vw;
+      max-width: 960px;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-step-text.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: clamp(2.2rem, 5.5vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin: 0 0 18px 0;
+      text-shadow: 0 4px 35px rgba(0, 160, 255, 0.5), 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .hero-subtitle {
+      font-family: var(--serif);
+      font-size: clamp(1.05rem, 2vw, 1.55rem);
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.88);
+      margin: 0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 35px;
+      z-index: 20;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.7);
+      animation: heroBounce 2.2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes heroBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
     }
 
     .frame {
@@ -1627,6 +1731,34 @@
   </script>
 </head>
 <body>
+    <!-- Hero Scroll Section (ClassDdok Scroll + Kakao Video Background) -->
+  <section class="hero-scroll-container" id="hero-section">
+    <div class="hero-sticky-view">
+      <video class="hero-bg-video" autoplay loop muted playsinline poster="assets/complete-shelf-preview.jpg">
+        <source src="assets/hero-bg.mp4" type="video/mp4">
+        <source src="assets/%ED%85%8C%EC%8A%A4%ED%8A%B8.mp4" type="video/mp4">
+      </video>
+      <canvas class="hero-particle-canvas" id="hero-particle-canvas"></canvas>
+
+      <div class="hero-text-wrapper">
+        <div class="hero-step-text active" id="hero-step-0">
+          <h1 class="hero-title">미래를 여는 AI 교육</h1>
+          <p class="hero-subtitle">인공지능과 함께 가르치고 배우는 새로운 교실</p>
+        </div>
+        <div class="hero-step-text" id="hero-step-1">
+          <h1 class="hero-title">생성형 AI부터 윤리까지</h1>
+          <p class="hero-subtitle">선생님과 학생을 위한 7가지 필수 교육 가이드</p>
+        </div>
+        <div class="hero-step-text" id="hero-step-2">
+          <h1 class="hero-title">AI 교육 서가에 오신 것을 환영합니다</h1>
+          <p class="hero-subtitle">아래로 스크롤하여 3D 서가를 탐색해 보세요</p>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">SCROLL DOWN ↓</div>
+    </div>
+  </section>
+
   <main class="experience" id="experience">
     <div class="scene-shell">
       <canvas id="scene" aria-hidden="true"></canvas>
@@ -5829,7 +5961,98 @@
       renderer?.dispose();
     }
 
+    
+    // --- HERO SECTION SCROLL & PARTICLE INTERACTION ---
+    function initHeroScrollInteraction() {
+      const heroSection = document.getElementById('hero-section');
+      const particleCanvas = document.getElementById('hero-particle-canvas');
+      if (!heroSection || !particleCanvas) return;
+
+      const steps = [
+        document.getElementById('hero-step-0'),
+        document.getElementById('hero-step-1'),
+        document.getElementById('hero-step-2')
+      ];
+
+      // Particle Canvas Initialization
+      const pCtx = particleCanvas.getContext('2d');
+      let pWidth = 0, pHeight = 0, particles = [], pRaf = 0;
+
+      function resizeParticles() {
+        pWidth = particleCanvas.width = window.innerWidth;
+        pHeight = particleCanvas.height = window.innerHeight;
+        createParticles();
+      }
+
+      function createParticles() {
+        particles = [];
+        const count = Math.floor((pWidth * pHeight) / 7500);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * pWidth,
+            y: Math.random() * pHeight,
+            r: Math.random() * 2.2 + 0.4,
+            color: Math.random() > 0.45 ? 'rgba(56, 189, 248, ' : 'rgba(255, 255, 255, ',
+            alpha: Math.random() * 0.65 + 0.2,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45
+          });
+        }
+      }
+
+      function drawParticles() {
+        if (!pCtx) return;
+        pCtx.clearRect(0, 0, pWidth, pHeight);
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = pWidth;
+          if (p.x > pWidth) p.x = 0;
+          if (p.y < 0) p.y = pHeight;
+          if (p.y > pHeight) p.y = 0;
+
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          pCtx.fillStyle = p.color + p.alpha + ')';
+          pCtx.fill();
+        }
+        pRaf = requestAnimationFrame(drawParticles);
+      }
+
+      window.addEventListener('resize', resizeParticles);
+      resizeParticles();
+      drawParticles();
+
+      // Scroll Progress Step Transition
+      function handleHeroScroll() {
+        const rect = heroSection.getBoundingClientRect();
+        const totalScroll = heroSection.offsetHeight - window.innerHeight;
+        const currentScroll = Math.max(0, -rect.top);
+        const progress = Math.min(1, currentScroll / Math.max(1, totalScroll));
+
+        let activeIdx = 0;
+        if (progress > 0.68) {
+          activeIdx = 2;
+        } else if (progress > 0.33) {
+          activeIdx = 1;
+        }
+
+        steps.forEach((step, idx) => {
+          if (!step) return;
+          if (idx === activeIdx) {
+            step.classList.add('active');
+          } else {
+            step.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', handleHeroScroll, { passive: true });
+      handleHeroScroll();
+    }
+
     async function initialize() {
+      initHeroScrollInteraction();
       const woodTexturePromise = woodTextureImage.decode().then(
         () => true,
         () => false
