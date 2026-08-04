@@ -1371,6 +1371,32 @@
       line-height: 1.45;
     }
 
+    .attribution {
+      position: absolute;
+      right: 22px;
+      bottom: 14px;
+      z-index: 20;
+      margin: 0;
+      color: color-mix(in srgb, var(--ink) 62%, transparent);
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      text-align: right;
+    }
+
+    .attribution a {
+      color: inherit;
+      pointer-events: auto;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .attribution a:hover,
+    .attribution a:focus-visible {
+      color: var(--ink);
+    }
+
     .detail-controls {
       align-items: end;
       margin-top: 24px;
@@ -1736,6 +1762,13 @@
         <p>Binding the collection</p>
       </div>
     </div>
+
+    <p class="attribution">
+      Original by MengTo ·
+      <a href="https://github.com/MengTo/complete-shelf" target="_blank" rel="noopener noreferrer">
+        GitHub repository
+      </a>
+    </p>
   </main>
 
   <script type="module">
