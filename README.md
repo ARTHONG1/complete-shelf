@@ -1,77 +1,42 @@
-# The Complete Shelf
+# AI 교육 서가
 
-An original, interactive Three.js library of seven clothbound hardcovers. Browse the continuous shelf, pull a volume into a responsive detail view, orbit the binding, and drag through a small set of physically curved pages.
+교사와 학습자를 위한 일곱 가지 AI 교육 주제를 인터랙티브 3D 서가로 소개합니다. 서가에서 책을 고르고, 상세 정보를 살펴보고, 책을 펼쳐 각 주제의 핵심 내용을 탐색할 수 있습니다.
 
-[**View the live experience**](https://mengto.github.io/complete-shelf/) · [**Read the build prompt**](PROMPT.md)
+## 일곱 가지 주제
 
-![The Complete Shelf with seven clothbound volumes](assets/complete-shelf-preview.jpg)
+1. AI 기초
+2. 생성형 AI
+3. 질문 설계
+4. AI 리터러시
+5. 수업 활용
+6. 평가 혁신
+7. AI 윤리
 
-The collection is organized around seven tools for modern creative work:
+## 원본 프로젝트와의 관계
 
-1. Codex
-2. Claude Code
-3. Cursor
-4. Antigravity
-5. Figma
-6. Framer
-7. Xcode
+이 프로젝트는 MengTo의 [The Complete Shelf](https://github.com/MengTo/complete-shelf)를 기반으로 만든 독립적인 AI 교육용 각색입니다. 원저작자와 제휴하거나 공식적으로 연결된 프로젝트가 아닙니다.
 
-## What is inside
+원본의 Three.js 서가, 책 모델, 카메라, 조명, 애니메이션과 페이지 상호작용은 유지하고, 사용자에게 표시되는 콘텐츠를 AI 교육 주제로 교체했습니다. 원본 저장소에는 명시적인 오픈소스 라이선스가 없으므로 이 저장소는 원본에 대한 별도 라이선스 권리를 주장하지 않습니다.
 
-- A continuous seven-volume shelf navigated with the wheel, arrow keys, buttons, or position markers.
-- Detailed hardcover construction with separate boards, spine, hinges, endpapers, page block, headbands, bookmark, foil, and contact shadows.
-- Responsive inspection mode with orbit, pan, zoom, hover-to-crack-open, click-to-open, and drag-to-turn page interactions.
-- Book-specific color systems that recolor the scene and editorial detail layout.
-- Procedural cloth, foil, paper, page-edge, wood, roughness, normal, and shadow textures.
-- Deterministic shelf-to-detail transitions with exact endpoints so reparenting the selected volume never produces a last-frame jump.
-- Accessible HTML controls and status announcements layered over the WebGL scene.
+## 로컬 실행
 
-## How it is made
-
-The entire experience lives in [`index.html`](index.html): markup, responsive layout, shaders and materials, book geometry, interaction state, animation, and embedded image atlases. There is no framework, bundler, backend, analytics layer, Mint dependency, or MCP call in the browser.
-
-The render stack uses [Three.js](https://threejs.org/) with physically based materials and `OrbitControls`. Cover and wood artwork are stored as embedded WebP atlases; supporting surface detail is generated at runtime with canvas textures. Each book is assembled from reusable geometry, while the front cover and pages use hinged groups and segmented meshes for curved page-turn motion.
-
-Interaction is managed as a small state machine:
-
-```text
-shelf -> opening detail -> closed inspection -> open book -> closing -> shelf
-```
-
-Camera, book, shelf, and view-offset transforms share deterministic eased timelines. This keeps the animation continuous when a book moves between the shelf and inspection scene graphs.
-
-## Build or remix it with an agent
-
-Start from [`PROMPT.md`](PROMPT.md), attach a visual reference if you have one, and ask your preferred coding agent to work directly in `index.html`.
-
-- [**Codex**](https://openai.com/codex/get-started/) — work in the repository, run the local site, inspect interactions, and iterate against browser proof.
-- [**Cursor**](https://www.cursor.com/) — open the folder, give Agent the prompt, and review changes in the editor.
-- [**Claude Code**](https://claude.com/product/claude-code) — run Claude in the project directory and point it at the prompt and HTML file.
-- [**Aura Build**](https://aura.build) — use the prompt and screenshots as a starting point for a visual build or remix.
-
-Whichever tool you use, the useful loop is the same: make one focused change, run the page, verify the real interaction, inspect the console, and keep only the revision that improves the experience.
-
-## Run locally
-
-The page uses JavaScript modules, so serve it over HTTP instead of opening it directly from disk:
+JavaScript 모듈을 사용하므로 파일을 직접 열지 말고 HTTP 서버로 실행합니다.
 
 ```bash
-python3 -m http.server 4173
+python -m http.server 4173
 ```
 
-Then visit [http://localhost:4173](http://localhost:4173).
+브라우저에서 `http://127.0.0.1:4173/`에 접속합니다. Three.js 모듈과 웹폰트를 불러오려면 인터넷 연결이 필요합니다.
 
-No install or build step is required. An internet connection is needed for the pinned Three.js modules and Inter font.
+## 기술 구성
 
-## Project structure
+- 단일 `index.html`
+- Three.js 0.165.0
+- 빌드 도구와 백엔드 없음
+- GitHub Pages 배포 가능
 
-```text
-complete-shelf/
-├── index.html   # Complete production experience
-├── PROMPT.md    # Portable recreation and remix brief
-└── README.md    # Project overview and implementation notes
-```
+## 향후 기능
 
-## Design notes
-
-The visual direction studies the clarity, material craft, and book photography of contemporary editorial publishers, including [Stripe Press](https://press.stripe.com/), while using original book titles, cover artwork, textures, layouts, and interaction design. This project is independent and is not affiliated with Stripe Press or the products represented by the seven volumes.
+- 책별 AI 교육 문서 보기
+- PDF 다운로드
+- 교육 자료 출처와 저작권 정보 표시
