@@ -5691,6 +5691,7 @@
     }
 
     function updateTransition(delta) {
+      if (!shelfStage || !camera) return;
       if (mode === "opening") {
         transitionTime = Math.min(
           1,
@@ -5748,6 +5749,7 @@
 
     function frame(time) {
       rafId = 0;
+      if (!renderer || !scene || !camera || !shelfStage) return;
       const delta = Math.min((time - lastTime) / 1000, 0.05);
       const elapsed = time / 1000;
       lastTime = time;
