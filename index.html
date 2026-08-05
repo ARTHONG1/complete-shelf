@@ -85,6 +85,7 @@
       width: 100%;
       height: 300vh;
       z-index: 10;
+      background: #1b1026;
     }
 
     .hero-sticky-view {
@@ -97,6 +98,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: #1b1026;
     }
 
     .hero-bg-video {
@@ -760,12 +762,7 @@
     }
 
     .loading {
-      position: absolute;
-      inset: 0;
-      z-index: 20;
-      display: grid;
-      background: var(--paper);
-      place-items: center;
+      display: none !important;
     }
 
     .loading__inner {
@@ -1726,9 +1723,9 @@
     <!-- Hero Scroll Section (ClassDdok Scroll + Kakao Video Background) -->
   <section class="hero-scroll-container" id="hero-section">
     <div class="hero-sticky-view" id="hero-sticky">
-      <video id="hero-video" class="hero-bg-video" autoplay loop muted playsinline poster="assets/complete-shelf-preview.jpg">
-        <source src="assets/테스트.mp4" type="video/mp4">
+      <video id="hero-video" class="hero-bg-video" autoplay loop muted playsinline preload="auto">
         <source src="assets/hero-bg.mp4" type="video/mp4">
+        <source src="assets/%ED%85%8C%EC%8A%A4%ED%8A%B8.mp4" type="video/mp4">
       </video>
       <div id="hero-overlay" class="hero-video-overlay"></div>
 
@@ -5980,7 +5977,7 @@
         // Pause video to save CPU/GPU when invisible
         if (heroVideo) {
           if (videoOpacity === 0 && !heroVideo.paused) heroVideo.pause();
-          else if (videoOpacity > 0 && heroVideo.paused) heroVideo.play();
+          else if (videoOpacity > 0 && heroVideo.paused) heroVideo.play().catch(() => {});
         }
 
         // Phase 2: 100vh to 200vh -> Fade out text
@@ -5997,6 +5994,10 @@
         } else {
           heroSection.style.pointerEvents = 'none';
         }
+      }
+
+      if (heroVideo && heroVideo.paused) {
+        heroVideo.play().catch(() => {});
       }
 
       window.addEventListener('scroll', handleScroll, { passive: true });
