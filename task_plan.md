@@ -1,6 +1,7 @@
 ﻿# AI 교육 서가 (AI Education Shelf) 프로젝트 종합 계획 및 진행 현황
 
 > **상태:** 완료 (Phase 1 ~ Phase 4 배포 완료, Phase 5 문서 연동 대기 중)
+> **Hero 섹션 배포:** 완료 (2026-08-04) — https://arthong1.github.io/complete-shelf/
 > **저장 위치:** `C:\Users\user\Desktop\연습\complete-shelf\task_plan.md`
 > **배포 URL:** https://arthong1.github.io/complete-shelf/
 > **GitHub Fork Repository:** https://github.com/ARTHONG1/complete-shelf
@@ -25,7 +26,8 @@
 | Phase 2 | 리브랜딩 설계 및 테스트 작성 | 완료 | `docs/superpowers/specs/`, `tests/ai-education-copy.test.mjs` (fail -> pass) |
 | Phase 3 | 한국어 AI 교육 콘텐츠 적용 | 완료 | `index.html`, `README.md`, 원작자 출처 및 고지 표기 |
 | Phase 4 | GitHub Fork & Pages 배포 | 완료 | `ARTHONG1/complete-shelf`, GitHub Pages HTTP 200 (`built`) |
-| Phase 5 | 책별 PDF/문서 연동 (향후) | 대기 | `documents/` 폴더에 PDF 추가 후 상세 패널 링크 구현 예정 |
+| Phase 5 | Hero 스크롤 비디오 섹션 추가 | 완료 | `index.html` + `assets/hero-bg.mp4` push, GitHub Pages `built` HTTP 200 |
+| Phase 6 | 책별 PDF/문서 연동 (향후) | 대기 | `documents/` 폴더에 PDF 추가 후 상세 패널 링크 구현 예정 |
 
 ---
 
