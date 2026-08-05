@@ -5752,6 +5752,11 @@
       const elapsed = time / 1000;
       lastTime = time;
 
+      if (window.scrollY < window.innerHeight * 0.7) {
+        if (!suspended) requestFrame();
+        return;
+      }
+
       if (pointerDirty) updateHover();
       updateShelfLayout(delta, elapsed);
       updateTransition(delta);
@@ -5993,6 +5998,10 @@
           heroSection.style.pointerEvents = 'auto';
         } else {
           heroSection.style.pointerEvents = 'none';
+        }
+
+        if (scrollY >= vh * 0.5) {
+          requestFrame();
         }
       }
 

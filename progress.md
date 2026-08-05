@@ -74,6 +74,17 @@
 
 ---
 
+## 2026-08-05 — 히어로 첫 화면 겹침 문구 제거 및 동영상 즉시 재생 수정
+
+### 해결된 문제
+1. **로딩 문구 겹침 제거:** WebGL 3D 로딩 안내 문구(`AI 교육 서가 준비 중`)가 히어로 반투명 레이어 뒤로 겹쳐서 비치는 현상 완전 제거 (`display: none !important`)
+2. **동영상 로드 전 검은 화면 제거:** `.hero-sticky-view` 및 `.hero-scroll-container`에 비디오 고유 딥 퍼플 색상(`#1b1026`)을 초기 배경색으로 지정하여 비디오 로딩 중에도 화면 튀는 현상 방지
+3. **포스터 및 소스 경로 최적화:** 3D 서가 프리뷰 이미지(`poster="assets/complete-shelf-preview.jpg"`) 제거, 영문 파일명 `assets/hero-bg.mp4`를 1순위 소스로 변경, `preload="auto"` 추가
+4. **JS 재생 보장:** 초기 진입 시 `heroVideo.play()` 명시적 호출
+5. **Git Commit & Push:** `b717dfa` 커밋 완료, GitHub Pages `built` 상태 확인 완료
+
+---
+
 ## 향후 작업 가이드라인 (Next Steps for User & Agent)
 
 1. **PDF 문서 배치:**
