@@ -94,3 +94,15 @@
    - `index.html` 내 책 상세보기 패널에 `[문서 읽기 (PDF)]`, `[다운로드]` 버튼 추가.
 3. **업데이트 후 GitHub Push:**
    - `git add .` -> `git commit -m "feat: add PDF document links"` -> `git push origin main` 실행 시 GitHub Pages에 자동 반영.
+
+
+---
+
+## 2026-08-05 — 스크롤 시 3D 서가 미출력(어두운 화면) 문제 최종 해결
+
+1. **원인:** 이전 GPU 최적화 코드의 rame() 루프 내 Early return(if (window.scrollY < 0.7vh) return) 조건으로 인해 초기 텍스처 디코딩 및 렌더링이 블로킹되고, 스크롤을 내린 후 3D 그래픽이 화면에 그려지지 않던 현상 확인
+2. **조치:** 
+   - rame() 내부의 잘못된 조기 리턴(Early return) 조건 제거
+   - handleScroll() 이벤트 발생 시 
+equestFrame()을 즉시 호출하도록 수정하여 스크롤 내리는 즉시 3D AI 교육 서가가 100% 정상 렌더링되도록 수정
+3. **검증:** Commit 1e76b7 -> Push -> GitHub Pages uilt 완료 및 HTTP 200 정상 출력 확인
