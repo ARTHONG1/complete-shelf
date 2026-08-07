@@ -106,3 +106,12 @@
    - handleScroll() 이벤트 발생 시 
 equestFrame()을 즉시 호출하도록 수정하여 스크롤 내리는 즉시 3D AI 교육 서가가 100% 정상 렌더링되도록 수정
 3. **검증:** Commit 1e76b7 -> Push -> GitHub Pages uilt 완료 및 HTTP 200 정상 출력 확인
+
+
+---
+
+## 2026-08-07 — 히어로 섹션 완전 삭제 및 3D 서가 직행 모드 적용
+
+1. **사용자 요청:** 히어로 스크롤 비디오 화면 완전 제거 및 접속 시 3D 서가 바로 출력 요청
+2. **조치:** index.html에서 히어로 스크롤 섹션 HTML/CSS/JS 및 비디오 연동 삭제. .experience 3D 서가 레이아웃(100vh)으로 복원
+3. **검증:** 테스트 4/4 통과, Commit 26146ce -> Push -> GitHub Pages uilt 완료 (HTTP 200 OK)
